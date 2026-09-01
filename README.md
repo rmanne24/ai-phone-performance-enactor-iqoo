@@ -1,4 +1,3 @@
-# ai-phone-performance-enactor-iqoo
 # AI Phone Performance Enactor
 
 > **An AI-powered predictive performance intelligence layer for smartphones.**
