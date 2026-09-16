@@ -2,45 +2,575 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#07101f" />
-    <title>NEXUS // Performance Intelligence</title>
+    <title>KATSU // Performance Intelligence (iQOO 13)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="noise"></div><div class="orb orb-a"></div><div class="orb orb-b"></div>
-    <main class="app-shell">
-      <nav><a class="brand" href="#"><span class="brand-mark">N</span><span>NEXUS <i>//</i></span></a><div class="nav-pulse"><span></span> SYSTEM OPTIMAL</div><button class="avatar" aria-label="Profile">SM</button></nav>
+    <div class="noise"></div>
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
 
-      <section id="dashboard" class="view active">
-        <div class="eyebrow">AI PERFORMANCE INTELLIGENCE <span>v0.9</span></div>
-        <div class="hero-row"><div><h1>Your phone, <em>ahead</em><br>of the game.</h1><p class="lede">Predict how every session will perform before you press play.</p></div><button class="primary scan-btn" data-go="analyze">ANALYZE A GAME <b>→</b></button></div>
-        <div class="overview-grid">
-          <article class="readiness card"><div class="card-label">GAME READINESS <span class="live-dot">LIVE</span></div><div class="score-wrap"><div class="score-ring"><span id="readinessScore">82</span><small>/100</small></div><div><h2>Ready to play</h2><p>Performance conditions are stable.</p><div class="mini-tags"><span>THERMAL SAFE</span><span>MEMORY CLEAR</span></div></div></div><div class="readiness-footer"><span>LAST CHECKED <b>JUST NOW</b></span><button class="text-btn" data-go="analyze">VIEW ANALYSIS →</button></div></article>
-          <article class="device card"><div class="card-label">DEVICE STATUS <span id="deviceLabel">iQOO 13</span></div><div class="device-name"><div class="phone-icon">▯</div><div><h3 id="deviceName">iQOO 13 <small id="deviceTag">5G</small></h3><p id="deviceMeta">Snapdragon® 8 Elite</p></div><span class="verified">✓</span></div><div class="stat-bars"><div><label>MEMORY <b id="ramText">5.6 / 12 GB</b></label><div class="track"><i id="ramBar" style="width:47%"></i></div></div><div><label>STORAGE <b id="storageText">189 / 256 GB</b></label><div class="track"><i id="storageBar" class="violet" style="width:74%"></i></div></div></div><div class="battery-row"><span>BATTERY <b id="batteryText">78%</b></span><span id="tempText">39°C <i class="temp-ok" id="tempDot"></i></span><span class="charging" id="chargingText">⚡ CHARGING</span></div></article>
+    <!-- Main Web Application Container -->
+    <div class="phone-frame-wrapper app-wrapper">
+      <div class="phone-frame app-frame">
+        <!-- Top Header Navigation -->
+        <header class="phone-nav app-nav">
+          <a class="brand" href="#" data-go="dashboard">
+            <span class="brand-mark">K</span>
+            <span>KATSU</span>
+          </a>
+          
+          <div class="header-right">
+            <span id="backendStatus" class="backend-pill"><span class="pulse-dot"></span> ACTIVE</span>
+            <button class="avatar" id="simToggle" aria-label="Device Simulator" title="Telemetry Simulator">⚙</button>
+          </div>
+        </header>
+
+        <!-- Main Slide Viewport (Fits exactly inside iQOO 13 phone dimensions) -->
+        <main class="phone-screen-viewport">
+
+          <!-- VIEW 1: DASHBOARD -->
+          <section id="dashboard" class="view active">
+            <!-- Slide Switcher Option -->
+            <div class="slide-nav-bar">
+              <button class="slide-pill active" data-slide-btn="dash-slide-1">READINESS &amp; DEVICE</button>
+              <button class="slide-pill" data-slide-btn="dash-slide-2">LIVE INTEL &amp; SIM</button>
+            </div>
+
+            <!-- Slide 1: Readiness & Device State -->
+            <div id="dash-slide-1" class="sub-slide active">
+              <div class="hero-compact">
+                <div class="eyebrow">YOUR DEVICE MODEL: <span>iQOO 13</span></div>
+                <h1>Your phone, <em>ahead</em> of the game.</h1>
+                <p class="lede">Predict session stability before launching demanding workloads.</p>
+              </div>
+
+              <article class="readiness card">
+                <div class="card-label">GAME READINESS <span class="live-dot">LIVE</span></div>
+                <div class="score-wrap">
+                  <div class="score-ring" id="readinessRing">
+                    <span id="readinessScore">82</span>
+                    <small>/100</small>
+                  </div>
+                  <div>
+                    <h2 id="readinessTitle">Ready to play</h2>
+                    <p id="readinessSub">Performance conditions are stable.</p>
+                    <div class="mini-tags">
+                      <span id="tagThermal">THERMAL SAFE</span>
+                      <span id="tagMemory">MEMORY CLEAR</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="device card">
+                <div class="card-label">DEVICE STATUS <span>Snapdragon® 8 Elite</span></div>
+                <div class="stat-bars">
+                  <div>
+                    <label>MEMORY <b id="ramText">5.6 / 12 GB</b></label>
+                    <div class="track"><i id="ramBar" style="width:47%"></i></div>
+                  </div>
+                  <div>
+                    <label>STORAGE <b id="storageText">189 / 256 GB</b></label>
+                    <div class="track"><i class="violet" id="storageBar" style="width:74%"></i></div>
+                  </div>
+                </div>
+                <div class="battery-row">
+                  <span>BATTERY <b id="batteryText">78%</b></span>
+                  <span id="tempText">39.0°C <i class="temp-ok"></i></span>
+                  <span class="charging" id="chargingStatus">⚡ CHARGING</span>
+                </div>
+              </article>
+
+              <div class="slide-action-row">
+                <button class="primary" data-go="analyze">ANALYZE A GAME <b>→</b></button>
+              </div>
+            </div>
+
+            <!-- Slide 2: Today's Intelligence & Telemetry Simulator -->
+            <div id="dash-slide-2" class="sub-slide">
+              <div class="section-head compact-head">
+                <div>
+                  <span class="eyebrow">TODAY'S SIGNALS</span>
+                  <h2>Live Hardware Intel</h2>
+                </div>
+              </div>
+
+              <div class="intel-grid">
+                <article class="intel card">
+                  <div class="intel-icon lime">◌</div>
+                  <div>
+                    <span>BATTERY WINDOW</span>
+                    <h3 id="intelPlaytime">2h 14m of playtime</h3>
+                    <p>Calculated at current state for AAA titles.</p>
+                  </div>
+                </article>
+                <article class="intel card">
+                  <div class="intel-icon orange">⌁</div>
+                  <div>
+                    <span>THERMAL FORECAST</span>
+                    <h3 id="intelThermal">Stable for 42 mins</h3>
+                    <p>Ambient conditions remain within safe limits.</p>
+                  </div>
+                </article>
+                <article class="intel card">
+                  <div class="intel-icon violet">↯</div>
+                  <div>
+                    <span>NETWORK COST</span>
+                    <h3>1.3 GB / hour</h3>
+                    <p>Estimated data use for high-tickrate sessions.</p>
+                  </div>
+                </article>
+              </div>
+
+              <!-- Inline Telemetry Simulator on Slide 2 -->
+              <article class="card sim-card">
+                <div class="card-label">TELEMETRY SIMULATOR <span>TEST STATES</span></div>
+                <div class="sim-presets">
+                  <button class="chip-btn active" data-preset="nominal">NOMINAL 39°C</button>
+                  <button class="chip-btn" data-preset="hot">THROTTLE 43.5°C</button>
+                  <button class="chip-btn" data-preset="cool">COOL 32°C</button>
+                  
+                </div>
+                <div class="sim-slider-compact">
+                  <label>DEVICE TEMP: <b id="simTempLabel">39.0°C</b></label>
+                  <input type="range" id="simTemp" min="28" max="46" step="0.5" value="39" />
+                </div>
+              </article>
+
+              <div class="slide-action-row">
+                <button class="primary" data-go="history">VIEW 30-DAY WEAR <b>→</b></button>
+              </div>
+            </div>
+          </section>
+
+          <!-- VIEW 2: ANALYZE / SELECT WORKLOAD -->
+          <section id="analyze" class="view">
+            <!-- Slide Switcher Option -->
+            <div class="slide-nav-bar">
+              <button class="slide-pill active" data-slide-btn="analyze-slide-1">POPULAR TITLES</button>
+              <button class="slide-pill" data-slide-btn="analyze-slide-2">CUSTOM APK WORKLOAD</button>
+            </div>
+
+            <!-- Slide 1: Popular Games Catalog -->
+            <div id="analyze-slide-1" class="sub-slide active">
+              <div class="hero-compact">
+                <div class="eyebrow">PREDICTIVE ENGINE <span>01 / WORKLOAD</span></div>
+                <h2>Select a Game Title</h2>
+              </div>
+
+              <div class="game-grid" id="gameGrid"></div>
+
+              <div class="analyze-bottom">
+                <div class="selection">
+                  <span class="eyebrow">SELECTED TITLE</span>
+                  <strong id="selectedName">Genshin Impact</strong>
+                  <span id="selectedSpecs">HIGH GPU · 5.2 GB RAM</span>
+                </div>
+                <button class="primary" id="runAnalysis">RUN PREDICTION <b>→</b></button>
+              </div>
+            </div>
+
+            <!-- Slide 2: Custom Game / APK Workload -->
+            <div id="analyze-slide-2" class="sub-slide">
+              <div class="hero-compact">
+                <div class="eyebrow">CUSTOM BENCHMARK <span>02 / UNLISTED APK</span></div>
+                <h2>Test Any Custom Game</h2>
+                <p class="lede">Model unlisted titles against live iQOO 13 telemetry.</p>
+              </div>
+
+              <div class="custom-game-box">
+                <div class="custom-input-row">
+                  <label>Game Title / APK</label>
+                  <input type="text" id="customName" placeholder="e.g. Zenless Zone Zero" value="Zenless Zone Zero" />
+                </div>
+                <div class="custom-input-grid">
+                  <div>
+                    <label>RAM Demand</label>
+                    <input type="number" id="customRam" min="1" max="10" step="0.5" value="5.5" />
+                  </div>
+                  <div>
+                    <label>GPU Intensity</label>
+                    <select id="customGpu">
+                      <option value="0.5">Medium (Casual)</option>
+                      <option value="0.75">High (Competitive)</option>
+                      <option value="0.95" selected>Very High (AAA)</option>
+                    </select>
+                  </div>
+                </div>
+                <button class="chip-btn full-btn" id="applyCustomGame">SELECT &amp; CONFIGURE</button>
+              </div>
+
+              <div class="slide-action-row">
+                <button class="primary" id="runCustomAnalysis">RUN PREDICTION ON CUSTOM APP <b>→</b></button>
+              </div>
+            </div>
+          </section>
+
+          <!-- VIEW 3: RESULTS / PREDICTION -->
+          <section id="results" class="view">
+            <!-- Slide Switcher Option -->
+            <div class="slide-nav-bar">
+              <button class="slide-pill active" data-slide-btn="res-slide-1">VERDICT &amp; ACTIONS</button>
+              <button class="slide-pill" data-slide-btn="res-slide-2">IMPACT MATRIX &amp; AI</button>
+            </div>
+
+            <!-- Slide 1: Performance Verdict & Optimization -->
+            <div id="res-slide-1" class="sub-slide active">
+              <div class="results-top">
+                <div class="eyebrow">PREDICTION COMPLETE <span id="resultGame">GENSHIN IMPACT</span></div>
+                <div class="confidence">MODEL CONFIDENCE <b id="modelConfidence">94%</b></div>
+              </div>
+
+              <article class="verdict card">
+                <div class="card-label">PERFORMANCE VERDICT</div>
+                <div class="verdict-main">
+                  <div class="big-score">
+                    <span id="performanceScore">72</span>
+                    <small>/100</small>
+                  </div>
+                  <div>
+                    <span class="verdict-label" id="verdictLabel">PLAYABLE WITH CARE</span>
+                    <h2 id="verdictTitle">Strong start. Watch the heat.</h2>
+                    <p id="verdictCopy">You have enough power for a smooth session, but prolonged play may create thermal pressure.</p>
+                  </div>
+                </div>
+                <div class="fps-row">
+                  <span>ESTIMATED FRAME RATE</span>
+                  <b id="fpsText">48–60 FPS</b>
+                  <div class="fps-track"><i id="fpsTrackBar" style="width: 78%"></i></div>
+                </div>
+              </article>
+
+              <article class="optimize card">
+                <div>
+                  <div class="eyebrow">RECOMMENDED ACTION</div>
+                  <h2>Prepare your phone for this session.</h2>
+                  <p id="optimizeCopy">Close 3 background processes and activate Game Mode to gain an estimated 8 FPS.</p>
+                </div>
+                <button class="primary" id="optimizeBtn">OPTIMIZE FOR ME <b>→</b></button>
+              </article>
+
+              <div class="launch-row">
+                <button class="text-btn" data-go="analyze">← CHANGE GAME</button>
+                <button class="launch" id="launchBtn">LAUNCH GAME <span>↗</span></button>
+              </div>
+            </div>
+
+            <!-- Slide 2: Impact Breakdown & Explainable AI -->
+            <div id="res-slide-2" class="sub-slide">
+              <div class="hero-compact">
+                <div class="eyebrow">IMPACT BREAKDOWN <span>TECHNICAL TELEMETRY</span></div>
+                <h2>Hardware Load Signals</h2>
+              </div>
+
+              <div class="risks" id="risks"></div>
+
+              <article class="ai-card card">
+                <div class="ai-title"><span class="spark">✦</span> KATSU AI <small>EXPLAINED</small></div>
+                <p id="aiText">Your iQOO 13 can run Genshin Impact comfortably right now. Memory headroom is healthy, but the current 39°C device temperature means sustained high settings could cause a small FPS dip after 40 minutes.</p>
+                <div class="ai-actions">
+                  <button class="text-btn" id="whyBtn">WHY THIS RESULT? ⚙</button>
+                  <button class="chip-btn" id="speakBtn">⌁ PLAY AUDIO</button>
+                </div>
+              </article>
+
+              <div class="slide-action-row">
+                <button class="primary" data-slide-btn="res-slide-1">← BACK TO VERDICT</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- VIEW 4: LIVE GAME MODE SESSION -->
+          <section id="session" class="view">
+            <!-- Idle / No Active Session State -->
+            <div id="sessionIdleState" class="session-idle-card">
+              <div class="idle-icon-wrap">
+                <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="var(--lime)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="6" width="20" height="12" rx="6"></rect>
+                  <path d="M6 12h4m-2-2v4"></path>
+                  <circle cx="15" cy="11" r="1" fill="var(--lime)"></circle>
+                  <circle cx="18" cy="13" r="1" fill="var(--lime)"></circle>
+                </svg>
+              </div>
+              <div class="eyebrow">GAME MODE ENGINE <span>STANDBY</span></div>
+              <h2>No Session Ongoing</h2>
+              <p>Launch a game workload from Predict to monitor live rolling frame rates, thermal throttling, and hardware telemetry in real-time.</p>
+              <button class="primary" id="startNewSessionBtn">START A NEW SESSION <b>→</b></button>
+            </div>
+
+            <!-- Active Live Session Stream -->
+            <div id="sessionActiveState" style="display: none;">
+              <div class="session-head">
+                <div>
+                  <div class="eyebrow">GAME MODE <span class="live-dot">LIVE STREAM</span></div>
+                  <h1 id="sessionGame">Genshin Impact</h1>
+                </div>
+                <button class="end-btn" id="endSession">END SESSION</button>
+              </div>
+
+              <div class="session-score">
+                <div>
+                  <span id="liveFps">58</span>
+                  <small>FPS</small>
+                </div>
+                <div class="live-status">
+                  <i></i> <span id="sessionStatusLabel">STABLE PERFORMANCE</span>
+                  <p id="sessionStatusDesc">Frame rate is holding within target range.</p>
+                </div>
+              </div>
+
+              <div class="chart-card card">
+                <div class="card-label">FRAME RATE STREAM <span id="fpsAvgLabel">AVG 58 FPS · 1% LOW 51</span></div>
+                <svg id="liveSvgChart" viewBox="0 0 800 180" preserveAspectRatio="none" aria-label="fps chart">
+                  <defs>
+                    <linearGradient id="area" x1="0" x2="0" y1="0" y2="1">
+                      <stop stop-color="#b8ff58" stop-opacity=".35"/>
+                      <stop offset="1" stop-color="#b8ff58" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <path id="chartArea" d="M0 148 L55 133 L108 140 L160 117 L214 125 L265 88 L320 102 L372 73 L426 94 L480 62 L535 82 L585 70 L640 44 L695 60 L748 36 L800 48 L800 180 L0 180Z" fill="url(#area)"/>
+                  <path id="chartLine" d="M0 148 L55 133 L108 140 L160 117 L214 125 L265 88 L320 102 L372 73 L426 94 L480 62 L535 82 L585 70 L640 44 L695 60 L748 36 L800 48" fill="none" stroke="#b8ff58" stroke-width="3"/>
+                </svg>
+                <div class="chart-axis">
+                  <span>START</span>
+                  <span>REAL-TIME STREAM</span>
+                </div>
+              </div>
+
+              <div class="live-metrics">
+                <article class="card">
+                  <span>DEVICE TEMP</span>
+                  <b id="liveTemp">40.1°</b>
+                  <small id="liveTempDiff">+1.1°</small>
+                </article>
+                <article class="card">
+                  <span>MEMORY LOAD</span>
+                  <b id="liveMem">7.9 <small>GB</small></b>
+                  <small id="liveMemPct">66%</small>
+                </article>
+                <article class="card">
+                  <span>BATTERY</span>
+                  <b id="sessionBattery">77%</b>
+                  <small id="sessionDrain">−1%</small>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <!-- VIEW 5: DEGRADATION TRACKER (PHASE 3) -->
+          <section id="history" class="view">
+            <!-- Slide Switcher Option -->
+            <div class="slide-nav-bar">
+              <button class="slide-pill active" data-slide-btn="hist-slide-1">30-DAY RETENTION</button>
+              <button class="slide-pill" data-slide-btn="hist-slide-2">PER-APP WEAR &amp; TIPS</button>
+            </div>
+
+            <!-- Slide 1: 30-Day Battery Health Trend -->
+            <div id="hist-slide-1" class="sub-slide active">
+              <div class="hero-compact">
+                <div class="eyebrow">POST-USAGE TRACKING <span>03 / DEGRADATION</span></div>
+                <h2>30-Day Battery Health</h2>
+              </div>
+
+              <article class="card degradation-hero">
+                <div class="card-label">HEALTH RETENTION CURVE <span>iQOO 13</span></div>
+                <div class="degrade-stats">
+                  <div>
+                    <span>RETENTION</span>
+                    <h2>95.8%</h2>
+                    <small>−4.2% (30d)</small>
+                  </div>
+                  <div>
+                    <span>SESSIONS</span>
+                    <h2>64</h2>
+                    <small>47.7 total hrs</small>
+                  </div>
+                  <div>
+                    <span>HEAT PEAKS</span>
+                    <h2>68%</h2>
+                    <small>&gt; 42°C time</small>
+                  </div>
+                </div>
+
+                <div class="history-chart-wrap">
+                  <svg viewBox="0 0 700 130" preserveAspectRatio="none">
+                    <path d="M0 10 L116 20 L233 34 L350 50 L466 70 L583 88 L700 105 L700 130 L0 130Z" fill="rgba(158,122,255,0.15)"/>
+                    <path d="M0 10 L116 20 L233 34 L350 50 L466 70 L583 88 L700 105" fill="none" stroke="#9e7aff" stroke-width="3"/>
+                    <circle cx="0" cy="10" r="4" fill="#b8ff58"/>
+                    <circle cx="700" cy="105" r="5" fill="#ffb25b"/>
+                  </svg>
+                  <div class="chart-axis">
+                    <span>DAY 1 (100%)</span>
+                    <span>DAY 15 (98.1%)</span>
+                    <span>TODAY (95.8%)</span>
+                  </div>
+                </div>
+              </article>
+
+              <div class="slide-action-row">
+                <button class="primary" data-slide-btn="hist-slide-2">VIEW PER-APP BREAKDOWN <b>→</b></button>
+              </div>
+            </div>
+
+            <!-- Slide 2: Per-App Degradation Breakdown & AI Tips -->
+            <div id="hist-slide-2" class="sub-slide">
+              <div class="hero-compact">
+                <div class="eyebrow">TITLE BREAKDOWN <span>BATTERY WEAR</span></div>
+                <h2>Wear by Application</h2>
+              </div>
+
+              <div class="degrade-list">
+                <article class="card app-wear-card">
+                  <div class="app-wear-head">
+                    <div class="app-tag-dot" style="background:#6257ff"></div>
+                    <div>
+                      <h3>Genshin Impact</h3>
+                      <p>18.2 hrs · 42.4°C avg peak</p>
+                    </div>
+                    <span class="wear-badge danger">−4.0% WEAR</span>
+                  </div>
+                  <div class="wear-bar"><i style="width: 68%; background:#6257ff"></i></div>
+                </article>
+
+                <article class="card app-wear-card">
+                  <div class="app-wear-head">
+                    <div class="app-tag-dot" style="background:#ed60b2"></div>
+                    <div>
+                      <h3>Honkai: Star Rail</h3>
+                      <p>12.0 hrs · 40.1°C avg peak</p>
+                    </div>
+                    <span class="wear-badge warning">−2.1% WEAR</span>
+                  </div>
+                  <div class="wear-bar"><i style="width: 28%; background:#ed60b2"></i></div>
+                </article>
+
+                <article class="card app-wear-card">
+                  <div class="app-wear-head">
+                    <div class="app-tag-dot" style="background:#ff783d"></div>
+                    <div>
+                      <h3>Call of Duty: Mobile</h3>
+                      <p>9.4 hrs · 38.2°C avg peak</p>
+                    </div>
+                    <span class="wear-badge safe">−1.5% WEAR</span>
+                  </div>
+                  <div class="wear-bar"><i style="width: 18%; background:#ff783d"></i></div>
+                </article>
+              </div>
+
+              <article class="card weekly-digest">
+                <div class="ai-title"><span class="spark">✦</span> WEEKLY AI DIGEST</div>
+                <p><strong>Genshin Impact has accounted for 68% of deep-thermal stress.</strong> Fast-charging while gaming adds +3.4°C cell heat. Using bypass charging preserves ~1.2% battery life per month.</p>
+              </article>
+
+              <div class="slide-action-row">
+                <button class="primary" data-go="dashboard">RETURN TO OVERVIEW <b>→</b></button>
+              </div>
+            </div>
+          </section>
+
+        </main>
+
+        <!-- Persistent Bottom Navigation Dock (iQOO OriginOS / Gaming Phone Dock) -->
+        <nav class="phone-dock">
+          <button class="dock-item active" data-nav="dashboard" title="Dashboard">
+            <span class="dock-icon">
+              <svg class="dock-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+                <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+                <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+                <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+              </svg>
+            </span>
+            <span class="dock-label">OVERVIEW</span>
+          </button>
+          <button class="dock-item" data-nav="analyze" title="Predictor">
+            <span class="dock-icon">
+              <svg class="dock-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"></path>
+              </svg>
+            </span>
+            <span class="dock-label">PREDICT</span>
+          </button>
+          <button class="dock-item" data-nav="session" title="Game Mode">
+            <span class="dock-icon">
+              <svg class="dock-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="6" width="20" height="12" rx="6"></rect>
+                <path d="M6 12h4m-2-2v4"></path>
+                <line x1="15" y1="11" x2="15.01" y2="11" stroke-width="3"></line>
+                <line x1="18" y1="13" x2="18.01" y2="13" stroke-width="3"></line>
+              </svg>
+            </span>
+            <span class="dock-label">SESSION</span>
+          </button>
+          <button class="dock-item" data-nav="history" title="Degradation">
+            <span class="dock-icon">
+              <svg class="dock-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 3v18h18"></path>
+                <path d="m19 9-5 5-4-4-3 3"></path>
+              </svg>
+            </span>
+            <span class="dock-label">WEAR</span>
+          </button>
+        </nav>
+
+        <!-- ML Explainability Modal -->
+        <div id="explainModal" class="modal-overlay">
+          <div class="modal-card card">
+            <div class="modal-head">
+              <div>
+                <div class="eyebrow">ML EXPLAINABILITY ENGINE</div>
+                <h2>Why This Result?</h2>
+              </div>
+              <button class="modal-close" id="explainClose">✕</button>
+            </div>
+            <p class="modal-sub">Mathematical feature importance evaluated by scikit-learn GradientBoosting:</p>
+
+            <div class="feature-bars">
+              <div class="feature-item">
+                <div class="feature-info">
+                  <span>Snapdragon 8 Elite (Adreno 830)</span>
+                  <b class="positive">+38.5%</b>
+                </div>
+                <div class="track"><i style="width: 38.5%; background: var(--lime)"></i></div>
+                <small>Top-tier GPU rasterization and Vulkan 1.3 driver headroom.</small>
+              </div>
+
+              <div class="feature-item">
+                <div class="feature-info">
+                  <span>Device Thermal Headroom</span>
+                  <b class="negative" id="featThermalVal">−26.0%</b>
+                </div>
+                <div class="track"><i style="width: 26.0%; background: var(--orange)"></i></div>
+                <small id="featThermalDesc">Current temperature operates close to throttle threshold.</small>
+              </div>
+
+              <div class="feature-item">
+                <div class="feature-info">
+                  <span>RAM Memory Margin</span>
+                  <b class="negative" id="featRamVal">−19.5%</b>
+                </div>
+                <div class="track"><i style="width: 19.5%; background: var(--violet)"></i></div>
+                <small id="featRamDesc">Memory margin dictates swap paging and frame pacing.</small>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <div class="model-badge">MODEL: GradientBoosting v1.0 · R²: 0.963</div>
+              <button class="primary" id="explainDone">UNDERSTOOD</button>
+            </div>
+          </div>
         </div>
-        <div class="section-head"><div><span class="eyebrow">TODAY'S INTELLIGENCE</span><h2>What's happening now</h2></div><button class="text-btn">VIEW HISTORY →</button></div>
-        <div class="intel-grid"><article class="intel card"><div class="intel-icon lime">◌</div><div><span>BATTERY WINDOW</span><h3>2h 14m of playtime</h3><p>At your current state with a demanding game.</p></div></article><article class="intel card"><div class="intel-icon orange">⌁</div><div><span>THERMAL FORECAST</span><h3>Stable for 42 mins</h3><p>Ambient conditions are favourable today.</p></div></article><article class="intel card"><div class="intel-icon violet">↯</div><div><span>NETWORK COST</span><h3>1.3 GB / hour</h3><p>Estimated data use for online sessions.</p></div></article></div>
-      </section>
 
-      <section id="analyze" class="view">
-        <button class="back" data-go="dashboard">← BACK TO DASHBOARD</button><div class="eyebrow">PREDICTIVE ENGINE <span>01 / SELECT WORKLOAD</span></div><h1>What are we <em>playing?</em></h1><p class="lede">Select a game and NEXUS will model its impact against your live device state.</p>
-        <div class="game-grid" id="gameGrid"></div>
-        <div class="analyze-bottom"><div class="selection"><span class="eyebrow">SELECTED TITLE</span><strong id="selectedName">Genshin Impact</strong><span id="selectedSpecs">HIGH GPU · 5.2 GB RAM</span></div><button class="primary" id="runAnalysis">RUN PREDICTION <b>→</b></button></div>
-      </section>
+      </div>
+    </div>
 
-      <section id="results" class="view"><button class="back" data-go="analyze">← CHANGE GAME</button><div class="results-top"><div><div class="eyebrow">PREDICTION COMPLETE <span id="resultGame">GENSHIN IMPACT</span></div><h1>Play smart. <em>Stay ahead.</em></h1></div><div class="confidence">MODEL CONFIDENCE <b>94%</b></div></div>
-        <div class="prediction-layout"><article class="verdict card"><div class="card-label">PERFORMANCE VERDICT</div><div class="verdict-main"><div class="big-score"><span id="performanceScore">72</span><small>/100</small></div><div><span class="verdict-label" id="verdictLabel">PLAYABLE WITH CARE</span><h2 id="verdictTitle">Strong start. Watch the heat.</h2><p id="verdictCopy">You have enough power for a smooth session, but prolonged play may create thermal pressure.</p></div></div><div class="fps-row"><span>ESTIMATED FRAME RATE</span><b id="fpsText">48–60 FPS</b><div class="fps-track"><i></i></div></div></article>
-          <article class="ai-card card"><div class="ai-title"><span class="spark">✦</span> NEXUS AI <small>EXPLAINED</small></div><p id="aiText">Your iQOO 13 can run Genshin Impact comfortably right now. Memory headroom is healthy, but the current 39°C device temperature means sustained high settings could cause a small FPS dip after 40 minutes.</p><div class="ai-actions"><button class="text-btn" id="whyBtn">WHY THIS RESULT?</button><button class="chip-btn" id="speakBtn">⌁ PLAY AUDIO</button></div></article></div>
-        <div class="risk-title"><span class="eyebrow">IMPACT BREAKDOWN</span><h2>Know before you launch</h2></div><div class="risks" id="risks"></div>
-        <article class="optimize card"><div><div class="eyebrow">RECOMMENDED ACTION</div><h2>Prepare your phone for this session.</h2><p id="optimizeCopy">Close 3 background processes and activate Game Mode to gain an estimated 8 FPS.</p></div><button class="primary" id="optimizeBtn">OPTIMIZE FOR ME <b>→</b></button></article><div class="launch-row"><button class="text-btn" data-go="dashboard">SAVE & EXIT</button><button class="launch" id="launchBtn">LAUNCH GAME <span>↗</span></button></div>
-      </section>
-
-      <section id="session" class="view"><div class="eyebrow">GAME MODE <span class="live-dot">LIVE SESSION</span></div><div class="session-head"><div><h1 id="sessionGame">Genshin Impact</h1><p>Monitoring performance in real time.</p></div><button class="end-btn" id="endSession">END SESSION</button></div><div class="session-score"><div><span id="liveFps">58</span><small>FPS</small></div><div class="live-status"><i></i> STABLE PERFORMANCE <p>Frame rate is holding within target range.</p></div></div><div class="chart-card card"><div class="card-label">FRAME RATE · LAST 12 MINUTES <span>AVG 57 FPS</span></div><svg viewBox="0 0 800 205" preserveAspectRatio="none" aria-label="fps chart"><defs><linearGradient id="area" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#b8ff58" stop-opacity=".35"/><stop offset="1" stop-color="#b8ff58" stop-opacity="0"/></linearGradient></defs><path d="M0 148 L55 133 L108 140 L160 117 L214 125 L265 88 L320 102 L372 73 L426 94 L480 62 L535 82 L585 70 L640 44 L695 60 L748 36 L800 48 L800 205 L0 205Z" fill="url(#area)"/><path d="M0 148 L55 133 L108 140 L160 117 L214 125 L265 88 L320 102 L372 73 L426 94 L480 62 L535 82 L585 70 L640 44 L695 60 L748 36 L800 48" fill="none" stroke="#b8ff58" stroke-width="3"/></svg><div class="chart-axis"><span>12 MIN AGO</span><span>NOW</span></div></div><div class="live-metrics"><article class="card"><span>DEVICE TEMP</span><b id="liveTemp">40.1°</b><small>+1.1° from launch</small></article><article class="card"><span>MEMORY LOAD</span><b>7.9 <small>GB</small></b><small>66% allocated</small></article><article class="card"><span>SESSION BATTERY</span><b id="sessionBattery">77%</b><small>−1% this session</small></article></div></section>
-    </main>
-    <div id="toast" class="toast"></div><script src="app.js"></script>
+    <div id="toast" class="toast"></div>
+    <script src="app.js"></script>
   </body>
 </html>

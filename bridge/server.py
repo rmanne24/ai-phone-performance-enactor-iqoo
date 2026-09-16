@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 HOST = "127.0.0.1"
-PORT = 8000
+PORT = int(os.environ.get("PORT", 8080))
 CACHE_SECONDS = 1.5
 
 _adb_path = None
@@ -391,12 +391,24 @@ class Handler(SimpleHTTPRequestHandler):
 
 
 def main() -> None:
+    global PORT
     os.chdir(ROOT)
     ThreadingHTTPServer.allow_reuse_address = True
-    server = ThreadingHTTPServer((HOST, PORT), Handler)
-    print(f"NEXUS dashboard: http://{HOST}:{PORT}")
-    print("Telemetry:       http://{0}:{1}/api/telemetry".format(HOST, PORT))
-    print("Connect a phone with USB debugging, then: adb devices")
+    server = None
+    for port_candidate in [PORT, 8080, 8000, 8081]:
+        try:
+            server = ThreadingHTTPServer((HOST, port_candidate), Handler)
+            PORT = port_candidate
+            break
+        except OSError:
+            continue
+    if server is None:
+        server = ThreadingHTTPServer((HOST, 0), Handler)
+        PORT = server.server_port
+
+    print(f"NEXUS dashboard: http://{HOST}:{PORT}", flush=True)
+    print("Telemetry:       http://{0}:{1}/api/telemetry".format(HOST, PORT), flush=True)
+    print("Connect a phone with USB debugging, then: adb devices", flush=True)
     while True:
         try:
             server.serve_forever()
